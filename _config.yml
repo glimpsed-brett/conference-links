@@ -1,0 +1,17 @@
+# Minimal config for a simple HTML site on GitHub Pages
+
+# Basic site info (optional but nice)
+title: ARCSys Technologies - 2026 Modeling Knowledge Workshop
+description: A simple home page for each reference to information about ARCSys Technologies' 2026 Conference
+
+# Important: Tell Jekyll this is mostly static HTML
+include:
+  - _pages
+
+# Disable things you probably don't need
+plugins: []
+
+# Use this if you're getting weird build issues
+safe: true
+lsi: false
+incremental: false
