@@ -9,22 +9,22 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:       #1f3560;
-      --navy-mid:   #2a4a80;
-      --navy-light: #3a5fa0;
-      --amber:      #ffc107;
-      --amber-deep: #e6a800;
-      --teal:       #0e9fa8;
-      --teal-light: #12bcc7;
-      --bg:         #eef1f7;
-      --card:       #ffffff;
-      --text:       #1a1e2e;
-      --muted:      #5a6380;
+      --navy-900: #141f3a;
+      --navy-700: #1f3560;
+      --navy-500: #2e4e8a;
+      --navy-300: #5b7ab8;
+      --navy-100: #dce5f5;
+      --navy-050: #f0f4fc;
+      --amber:    #ffc107;
+      --amber-dk: #c9980a;
+      --white:    #ffffff;
+      --text:     #111827;
+      --muted:    #4b5563;
     }
 
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: var(--bg);
+      font-family: 'Segoe UI', system-ui, Arial, sans-serif;
+      background: var(--navy-050);
       color: var(--text);
       min-height: 100vh;
       display: flex;
@@ -33,173 +33,148 @@
 
     /* ── Header ── */
     header {
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 55%, #1a4a72 100%);
+      background: linear-gradient(160deg, var(--navy-900) 0%, var(--navy-700) 60%, var(--navy-500) 100%);
       color: #fff;
-      padding: 32px 36px 28px;
+      padding: 32px 40px 28px;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: space-between;
-      gap: 16px;
+      gap: 20px;
       flex-wrap: wrap;
       position: relative;
       overflow: hidden;
     }
 
-    /* Decorative circle burst in header background */
-    header::before {
-      content: '';
-      position: absolute;
-      top: -60px; right: -60px;
-      width: 280px; height: 280px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,193,7,0.18) 0%, transparent 70%);
-      pointer-events: none;
-    }
+    /* Subtle amber glow in top-right corner */
     header::after {
       content: '';
       position: absolute;
-      bottom: -40px; left: 30%;
-      width: 200px; height: 200px;
+      top: -80px; right: -80px;
+      width: 320px; height: 320px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(14,159,168,0.15) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(255,193,7,0.15) 0%, transparent 65%);
       pointer-events: none;
     }
 
     .logo-area { position: relative; z-index: 1; }
 
     .logo-area h1 {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 800;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
+      line-height: 1;
     }
-    .logo-area h1 .arc  { color: #fff; }
-    .logo-area h1 .sys  { color: var(--amber); }
+    .logo-area h1 .sys { color: var(--amber); }
 
     .logo-area .workshop-name {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--teal-light);
-      margin-top: 5px;
-      letter-spacing: 0.03em;
+      margin-top: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.82);
+      letter-spacing: 0.01em;
     }
 
     .logo-area .dates {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.65);
-      margin-top: 3px;
-      letter-spacing: 0.02em;
-    }
-
-    .header-right {
-      position: relative;
-      z-index: 1;
+      margin-top: 4px;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
 
     header a.website-link {
+      position: relative;
+      z-index: 1;
       color: var(--amber);
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       font-weight: 700;
       text-decoration: none;
-      border: 2px solid rgba(255,193,7,0.6);
-      padding: 9px 20px;
-      border-radius: 8px;
+      border: 1.5px solid rgba(255,193,7,0.45);
+      padding: 9px 18px;
+      border-radius: 7px;
       white-space: nowrap;
-      background: rgba(255,193,7,0.08);
-      backdrop-filter: blur(4px);
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
-      display: inline-block;
+      transition: background 0.18s, border-color 0.18s, color 0.18s;
+      letter-spacing: 0.02em;
     }
     header a.website-link:hover {
       background: var(--amber);
       border-color: var(--amber);
-      color: var(--navy);
+      color: var(--navy-900);
     }
 
-    /* ── Accent strip ── */
+    /* ── Amber rule ── */
     .accent-bar {
-      height: 5px;
-      background: linear-gradient(90deg, var(--amber) 0%, var(--teal) 50%, var(--navy-light) 100%);
+      height: 4px;
+      background: linear-gradient(90deg, var(--amber-dk) 0%, var(--amber) 40%, rgba(255,193,7,0.3) 100%);
     }
 
     /* ── Main layout ── */
     main {
       flex: 1;
-      max-width: 780px;
+      max-width: 760px;
       width: 100%;
-      margin: 40px auto;
-      padding: 0 20px;
+      margin: 44px auto;
+      padding: 0 24px;
       display: flex;
       flex-direction: column;
-      gap: 28px;
+      gap: 24px;
     }
 
     /* ── Cards ── */
     .card {
-      background: var(--card);
+      background: var(--white);
       border-radius: 12px;
-      box-shadow: 0 4px 18px rgba(31,53,96,0.10), 0 1px 3px rgba(31,53,96,0.07);
+      box-shadow: 0 2px 6px rgba(20,31,58,0.08), 0 8px 24px rgba(20,31,58,0.06);
       overflow: hidden;
-      border: 1px solid rgba(31,53,96,0.07);
     }
 
     .card-header {
-      padding: 15px 24px;
+      background: var(--navy-700);
+      color: #fff;
+      padding: 14px 22px;
       display: flex;
       align-items: center;
       gap: 10px;
-      border-bottom: 1px solid rgba(31,53,96,0.08);
     }
 
-    .card-header.navy-header {
-      background: linear-gradient(90deg, var(--navy) 0%, var(--navy-mid) 100%);
-      color: #fff;
+    .card-header.amber {
+      background: var(--amber);
+      color: var(--navy-900);
     }
-
-    .card-header.teal-header {
-      background: linear-gradient(90deg, var(--teal) 0%, var(--teal-light) 100%);
-      color: #fff;
-    }
-
-    .card-header.amber-header {
-      background: linear-gradient(90deg, var(--amber-deep) 0%, var(--amber) 100%);
-      color: var(--navy);
-    }
-
-    .card-header .icon { font-size: 1.15rem; opacity: 0.9; }
 
     .card-header h2 {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       font-weight: 700;
-      letter-spacing: 0.07em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
     }
 
-    .card-header .badge {
+    .card-header .icon { font-size: 1rem; opacity: 0.85; }
+
+    .card-header .pill {
       margin-left: auto;
       font-size: 0.68rem;
       font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
       padding: 3px 10px;
       border-radius: 20px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      background: rgba(255,255,255,0.25);
-      color: inherit;
-      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
     }
 
-    .card-header.amber-header .badge {
-      background: rgba(31,53,96,0.15);
-      color: var(--navy);
-      border-color: rgba(31,53,96,0.2);
+    .card-header.amber .pill {
+      background: rgba(20,31,58,0.12);
+      border-color: rgba(20,31,58,0.2);
     }
 
-    .card-body { padding: 24px; }
+    .card-body { padding: 22px; }
 
-    /* ── Session buttons ── */
+    /* ── Session grid ── */
     .session-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 16px;
+      gap: 14px;
     }
 
     .session-btn {
@@ -207,60 +182,28 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 10px;
       padding: 24px 16px;
+      background: var(--navy-700);
+      color: #fff;
       text-decoration: none;
       border-radius: 10px;
-      font-size: 1rem;
       font-weight: 700;
+      font-size: 0.95rem;
       text-align: center;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.15s, box-shadow 0.15s;
+      border-left: 4px solid var(--amber-dk);
+      transition: background 0.18s, border-left-color 0.18s, transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 2px 8px rgba(20,31,58,0.18);
     }
 
-    .session-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity 0.2s;
+    .session-btn:hover {
+      background: var(--navy-500);
+      border-left-color: var(--amber);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(20,31,58,0.22);
     }
 
-    .session-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(31,53,96,0.22); }
-    .session-btn:hover::before { opacity: 1; }
-
-    .btn-main {
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
-      color: #fff;
-      box-shadow: 0 4px 12px rgba(31,53,96,0.3);
-    }
-    .btn-main::before { background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy-light) 100%); }
-
-    .btn-alm {
-      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 100%);
-      color: #fff;
-      box-shadow: 0 4px 12px rgba(14,159,168,0.35);
-    }
-    .btn-alm::before { background: linear-gradient(135deg, #0ab0ba 0%, #16d8e5 100%); }
-
-    .btn-quality {
-      background: linear-gradient(135deg, var(--amber-deep) 0%, var(--amber) 100%);
-      color: var(--navy);
-      box-shadow: 0 4px 12px rgba(255,193,7,0.4);
-    }
-    .btn-quality::before { background: linear-gradient(135deg, var(--amber) 0%, #ffd54f 100%); }
-
-    .session-btn .session-icon {
-      font-size: 1.8rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .session-btn .session-label {
-      position: relative;
-      z-index: 1;
-    }
+    .session-btn .session-icon { font-size: 1.6rem; }
 
     /* ── Reference link ── */
     .reference-link {
@@ -268,88 +211,80 @@
       align-items: center;
       gap: 16px;
       padding: 16px 20px;
-      background: linear-gradient(90deg, rgba(14,159,168,0.06) 0%, rgba(31,53,96,0.04) 100%);
-      border-radius: 10px;
+      background: var(--navy-050);
+      border-radius: 9px;
       text-decoration: none;
-      color: var(--navy);
-      border: 1.5px solid rgba(14,159,168,0.25);
-      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+      color: var(--navy-700);
+      border: 1.5px solid var(--navy-100);
+      transition: background 0.18s, border-color 0.18s, transform 0.15s;
     }
 
     .reference-link:hover {
-      border-color: var(--teal);
-      background: linear-gradient(90deg, rgba(14,159,168,0.12) 0%, rgba(31,53,96,0.06) 100%);
+      background: var(--navy-100);
+      border-color: var(--navy-300);
       transform: translateX(4px);
     }
 
-    .reference-link .ref-icon { font-size: 1.6rem; flex-shrink: 0; }
-
-    .reference-link .ref-meta { display: flex; flex-direction: column; gap: 3px; }
-
-    .reference-link .ref-label { font-weight: 700; font-size: 0.95rem; color: var(--navy); }
-
-    .reference-link .ref-desc { font-size: 0.8rem; color: var(--muted); }
+    .reference-link .ref-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .reference-link .ref-label { font-weight: 700; font-size: 0.95rem; }
+    .reference-link .ref-desc  { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
 
     /* ── Feedback ── */
     .feedback-block {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 22px;
       flex-wrap: wrap;
     }
 
     .feedback-block p {
       flex: 1;
-      font-size: 0.95rem;
+      font-size: 0.93rem;
       color: var(--muted);
       line-height: 1.65;
-      min-width: 200px;
+      min-width: 180px;
     }
 
     .feedback-btn {
       display: inline-block;
-      padding: 14px 30px;
-      background: linear-gradient(135deg, var(--amber-deep) 0%, var(--amber) 100%);
-      color: var(--navy);
+      padding: 13px 28px;
+      background: var(--amber);
+      color: var(--navy-900);
       font-weight: 800;
-      font-size: 0.95rem;
+      font-size: 0.93rem;
       text-decoration: none;
-      border-radius: 9px;
+      border-radius: 8px;
       white-space: nowrap;
-      box-shadow: 0 4px 14px rgba(255,193,7,0.45);
-      transition: filter 0.15s, transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 3px 10px rgba(201,152,10,0.35);
+      transition: background 0.18s, box-shadow 0.18s, transform 0.15s;
     }
     .feedback-btn:hover {
-      filter: brightness(1.08);
+      background: var(--amber-dk);
+      box-shadow: 0 6px 18px rgba(201,152,10,0.45);
       transform: translateY(-2px);
-      box-shadow: 0 7px 20px rgba(255,193,7,0.5);
     }
 
     /* ── Footer ── */
     footer {
+      padding: 20px 24px;
       text-align: center;
-      padding: 24px 20px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--muted);
-      border-top: 1px solid rgba(31,53,96,0.08);
-      background: rgba(255,255,255,0.6);
+      border-top: 1px solid var(--navy-100);
     }
-    footer a { color: var(--navy); text-decoration: none; font-weight: 700; }
-    footer a:hover { color: var(--teal); }
-
+    footer a { color: var(--navy-700); text-decoration: none; font-weight: 700; }
+    footer a:hover { color: var(--navy-500); text-decoration: underline; }
   </style>
 </head>
 <body>
 
   <header>
     <div class="logo-area">
-      <h1><span class="arc">ARC</span><span class="sys">Sys</span></h1>
+      <h1>ARC<span class="sys">Sys</span></h1>
       <div class="workshop-name">Modeling Knowledge Workshop</div>
       <div class="dates">May 26&ndash;27, 2026 &nbsp;&bull;&nbsp; Honolulu, HI</div>
     </div>
-    <div class="header-right">
-      <a class="website-link" href="https://arcsystechnologies.com" target="_blank" rel="noopener">ARCSys Technologies</a>
-    </div>
+    <a class="website-link" href="https://arcsystechnologies.com" target="_blank" rel="noopener">ARCSys Technologies</a>
   </header>
   <div class="accent-bar"></div>
 
@@ -357,24 +292,24 @@
 
     <!-- Sessions -->
     <div class="card">
-      <div class="card-header navy-header">
+      <div class="card-header">
         <span class="icon">&#128279;</span>
         <h2>Live Sessions</h2>
-        <span class="badge">May 26&ndash;27</span>
+        <span class="pill">May 26&ndash;27</span>
       </div>
       <div class="card-body">
         <div class="session-grid">
-          <a class="session-btn btn-main" href="https://main.arcsys.live" target="_blank" rel="noopener">
+          <a class="session-btn" href="https://main.arcsys.live" target="_blank" rel="noopener">
             <span class="session-icon">&#127968;</span>
-            <span class="session-label">Main Session</span>
+            Main Session
           </a>
-          <a class="session-btn btn-alm" href="https://alm.arcsys.live" target="_blank" rel="noopener">
+          <a class="session-btn" href="https://alm.arcsys.live" target="_blank" rel="noopener">
             <span class="session-icon">&#128203;</span>
-            <span class="session-label">ALM Session</span>
+            ALM Session
           </a>
-          <a class="session-btn btn-quality" href="https://quality.arcsys.live" target="_blank" rel="noopener">
+          <a class="session-btn" href="https://quality.arcsys.live" target="_blank" rel="noopener">
             <span class="session-icon">&#9989;</span>
-            <span class="session-label">Quality Session</span>
+            Quality Session
           </a>
         </div>
       </div>
@@ -382,16 +317,16 @@
 
     <!-- Reference Material -->
     <div class="card">
-      <div class="card-header teal-header">
+      <div class="card-header">
         <span class="icon">&#128196;</span>
         <h2>Reference Material</h2>
       </div>
       <div class="card-body">
         <a class="reference-link" href="https://copy-of-arcsys-conferenc-dtn890q.gamma.site/" target="_blank" rel="noopener">
           <span class="ref-icon">&#128218;</span>
-          <div class="ref-meta">
-            <span class="ref-label">ARCSys Conference Presentation</span>
-            <span class="ref-desc">Open the Gamma slide deck for reference during sessions</span>
+          <div>
+            <div class="ref-label">ARCSys Conference Presentation</div>
+            <div class="ref-desc">Open the Gamma slide deck for reference during sessions</div>
           </div>
         </a>
       </div>
@@ -399,9 +334,10 @@
 
     <!-- Feedback -->
     <div class="card">
-      <div class="card-header amber-header">
+      <div class="card-header amber">
         <span class="icon">&#128172;</span>
         <h2>Share Your Feedback</h2>
+        <span class="pill">Slido</span>
       </div>
       <div class="card-body">
         <div class="feedback-block">
