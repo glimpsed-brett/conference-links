@@ -44,8 +44,6 @@
       position: relative;
       overflow: hidden;
     }
-
-    /* Subtle amber glow in top-right corner */
     header::after {
       content: '';
       position: absolute;
@@ -57,7 +55,6 @@
     }
 
     .logo-area { position: relative; z-index: 1; }
-
     .logo-area h1 {
       font-size: 2.2rem;
       font-weight: 800;
@@ -65,7 +62,6 @@
       line-height: 1;
     }
     .logo-area h1 .sys { color: var(--amber); }
-
     .logo-area .workshop-name {
       margin-top: 8px;
       font-size: 1rem;
@@ -73,7 +69,6 @@
       color: rgba(255,255,255,0.82);
       letter-spacing: 0.01em;
     }
-
     .logo-area .dates {
       margin-top: 4px;
       font-size: 0.78rem;
@@ -135,24 +130,30 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      cursor: pointer;
+      user-select: none;
     }
-
     .card-header.amber {
       background: var(--amber);
       color: var(--navy-900);
     }
-
     .card-header h2 {
       font-size: 0.8rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
     }
-
     .card-header .icon { font-size: 1rem; opacity: 0.85; }
 
-    .card-header .pill {
+    /* Right-side header controls */
+    .card-header-right {
       margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pill {
       font-size: 0.68rem;
       font-weight: 700;
       letter-spacing: 0.07em;
@@ -161,12 +162,78 @@
       border-radius: 20px;
       background: rgba(255,255,255,0.18);
       border: 1px solid rgba(255,255,255,0.3);
+      white-space: nowrap;
     }
-
     .card-header.amber .pill {
       background: rgba(20,31,58,0.12);
       border-color: rgba(20,31,58,0.2);
     }
+
+    /* Collapse button */
+    .collapse-btn {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: inherit;
+      border-radius: 6px;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      padding: 0;
+      transition: background 0.18s;
+    }
+    .collapse-btn:hover { background: rgba(255,255,255,0.28); }
+    .card-header.amber .collapse-btn {
+      background: rgba(20,31,58,0.12);
+      border-color: rgba(20,31,58,0.2);
+    }
+    .card-header.amber .collapse-btn:hover { background: rgba(20,31,58,0.22); }
+
+    .chevron {
+      display: inline-block;
+      font-size: 0.65rem;
+      line-height: 1;
+      transition: transform 0.3s ease;
+      transform: rotate(0deg); /* ▾ points down = expanded */
+    }
+    .card.collapsed .chevron { transform: rotate(-90deg); }
+
+    /* Maximize button (wall only) */
+    .maximize-btn {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: background 0.18s;
+      white-space: nowrap;
+    }
+    .maximize-btn:hover { background: rgba(255,255,255,0.28); }
+
+    /* ── Collapsible wrapper (grid trick for smooth animation) ── */
+    .card-collapsible {
+      display: grid;
+      grid-template-rows: 1fr;
+      transition: grid-template-rows 0.3s ease, opacity 0.25s ease;
+      opacity: 1;
+    }
+    .card.collapsed .card-collapsible {
+      grid-template-rows: 0fr;
+      opacity: 0;
+    }
+    /* Direct child must have overflow:hidden so grid 0fr collapses it */
+    .card-collapsible > * { overflow: hidden; }
 
     .card-body { padding: 22px; }
 
@@ -176,7 +243,6 @@
       grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
       gap: 14px;
     }
-
     .session-btn {
       display: flex;
       flex-direction: column;
@@ -195,14 +261,12 @@
       transition: background 0.18s, border-left-color 0.18s, transform 0.15s, box-shadow 0.15s;
       box-shadow: 0 2px 8px rgba(20,31,58,0.18);
     }
-
     .session-btn:hover {
       background: var(--navy-500);
       border-left-color: var(--amber);
       transform: translateY(-2px);
       box-shadow: 0 6px 18px rgba(20,31,58,0.22);
     }
-
     .session-btn .session-icon { font-size: 1.6rem; }
 
     /* ── Reference link ── */
@@ -218,16 +282,54 @@
       border: 1.5px solid var(--navy-100);
       transition: background 0.18s, border-color 0.18s, transform 0.15s;
     }
-
     .reference-link:hover {
       background: var(--navy-100);
       border-color: var(--navy-300);
       transform: translateX(4px);
     }
-
     .reference-link .ref-icon { font-size: 1.5rem; flex-shrink: 0; }
     .reference-link .ref-label { font-weight: 700; font-size: 0.95rem; }
     .reference-link .ref-desc  { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+    /* ── Venue ── */
+    .venue-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 560px) { .venue-grid { grid-template-columns: 1fr; } }
+    .venue-details { display: flex; flex-direction: column; gap: 12px; }
+    .venue-detail-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.9rem;
+    }
+    .venue-detail-row .vicon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .venue-detail-row .vlabel { font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+                                letter-spacing: 0.07em; color: var(--muted); }
+    .venue-detail-row .vval  { font-weight: 600; color: var(--text); }
+    .venue-detail-row a      { color: var(--navy-700); text-decoration: none; }
+    .venue-detail-row a:hover{ text-decoration: underline; }
+    .venue-map {
+      width: 100%;
+      height: 220px;
+      border: none;
+      border-radius: 9px;
+      display: block;
+    }
+    .floor-plan-placeholder {
+      margin-top: 16px;
+      padding: 16px 20px;
+      background: var(--navy-050);
+      border: 1.5px dashed var(--navy-100);
+      border-radius: 9px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.6;
+    }
+    .floor-plan-placeholder strong { color: var(--navy-700); display: block; margin-bottom: 4px; }
 
     /* ── Feedback ── */
     .feedback-block {
@@ -236,7 +338,6 @@
       gap: 22px;
       flex-wrap: wrap;
     }
-
     .feedback-block p {
       flex: 1;
       font-size: 0.93rem;
@@ -244,7 +345,6 @@
       line-height: 1.65;
       min-width: 180px;
     }
-
     .feedback-btn {
       display: inline-block;
       padding: 13px 28px;
@@ -264,77 +364,13 @@
       transform: translateY(-2px);
     }
 
-    /* ── Venue ── */
-    .venue-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-    @media (max-width: 560px) { .venue-grid { grid-template-columns: 1fr; } }
-
-    .venue-details { display: flex; flex-direction: column; gap: 12px; }
-
-    .venue-detail-row {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      font-size: 0.9rem;
-    }
-    .venue-detail-row .vicon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
-    .venue-detail-row .vlabel { font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-                                letter-spacing: 0.07em; color: var(--muted); }
-    .venue-detail-row .vval  { font-weight: 600; color: var(--text); }
-    .venue-detail-row a      { color: var(--navy-700); text-decoration: none; }
-    .venue-detail-row a:hover{ text-decoration: underline; }
-
-    .venue-map {
-      width: 100%;
-      height: 220px;
-      border: none;
-      border-radius: 9px;
-      display: block;
-    }
-
-    .floor-plan-placeholder {
-      margin-top: 16px;
-      padding: 16px 20px;
-      background: var(--navy-050);
-      border: 1.5px dashed var(--navy-100);
-      border-radius: 9px;
-      font-size: 0.88rem;
-      color: var(--muted);
-      text-align: center;
-      line-height: 1.6;
-    }
-    .floor-plan-placeholder strong { color: var(--navy-700); display: block; margin-bottom: 4px; }
-
     /* ── Community wall ── */
     .slido-embed {
       width: 100%;
       height: 560px;
       border: none;
       display: block;
-      border-radius: 0 0 12px 12px;
     }
-
-    .maximize-btn {
-      margin-left: auto;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.3);
-      color: #fff;
-      border-radius: 6px;
-      padding: 4px 10px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: background 0.18s;
-    }
-    .maximize-btn:hover { background: rgba(255,255,255,0.28); }
 
     /* Maximized state */
     .card.wall-maximized {
@@ -345,12 +381,20 @@
       display: flex;
       flex-direction: column;
     }
-    .card.wall-maximized .card-header { flex-shrink: 0; border-radius: 0; }
-    .card.wall-maximized .slido-embed {
+    .card.wall-maximized .card-header { flex-shrink: 0; border-radius: 0; cursor: default; }
+    .card.wall-maximized .card-collapsible {
       flex: 1;
-      height: 100%;
-      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+      grid-template-rows: unset;
+      opacity: 1;
     }
+    .card.wall-maximized .card-collapsible > div {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .card.wall-maximized .slido-embed { flex: 1; height: 100%; }
 
     /* ── Footer ── */
     footer {
@@ -379,144 +423,181 @@
   <main>
 
     <!-- Sessions -->
-    <div class="card">
-      <div class="card-header">
+    <div class="card" id="sessions-card">
+      <div class="card-header" data-card="sessions-card">
         <span class="icon">&#128279;</span>
         <h2>Live Sessions</h2>
-        <span class="pill">May 26&ndash;27</span>
-      </div>
-      <div class="card-body">
-        <div class="session-grid">
-          <a class="session-btn" href="https://main.arcsys.live" target="_blank" rel="noopener">
-            <span class="session-icon">&#127968;</span>
-            Main Session
-          </a>
-          <a class="session-btn" href="https://alm.arcsys.live" target="_blank" rel="noopener">
-            <span class="session-icon">&#128203;</span>
-            ALM Session
-          </a>
-          <a class="session-btn" href="https://quality.arcsys.live" target="_blank" rel="noopener">
-            <span class="session-icon">&#9989;</span>
-            Quality Session!
-          </a>
+        <div class="card-header-right">
+          <span class="pill">May 26&ndash;27</span>
+          <button class="collapse-btn" aria-label="Toggle Live Sessions" onclick="event.stopPropagation()">
+            <span class="chevron">&#9662;</span>
+          </button>
         </div>
+      </div>
+      <div class="card-collapsible">
+        <div><div class="card-body">
+          <div class="session-grid">
+            <a class="session-btn" href="https://main.arcsys.live" target="_blank" rel="noopener">
+              <span class="session-icon">&#127968;</span>
+              Main Session
+            </a>
+            <a class="session-btn" href="https://alm.arcsys.live" target="_blank" rel="noopener">
+              <span class="session-icon">&#128203;</span>
+              ALM Session
+            </a>
+            <a class="session-btn" href="https://quality.arcsys.live" target="_blank" rel="noopener">
+              <span class="session-icon">&#9989;</span>
+              Quality Session!
+            </a>
+          </div>
+        </div></div>
       </div>
     </div>
 
     <!-- Reference Material -->
-    <div class="card">
-      <div class="card-header">
+    <div class="card" id="reference-card">
+      <div class="card-header" data-card="reference-card">
         <span class="icon">&#128196;</span>
         <h2>Reference Material</h2>
+        <div class="card-header-right">
+          <button class="collapse-btn" aria-label="Toggle Reference Material" onclick="event.stopPropagation()">
+            <span class="chevron">&#9662;</span>
+          </button>
+        </div>
       </div>
-      <div class="card-body">
-        <a class="reference-link" href="https://copy-of-arcsys-conferenc-dtn890q.gamma.site/" target="_blank" rel="noopener">
-          <span class="ref-icon">&#128218;</span>
-          <div>
-            <div class="ref-label">ARCSys Conference Presentation</div>
-            <div class="ref-desc">Open the Gamma slide deck for reference during sessions</div>
-          </div>
-        </a>
+      <div class="card-collapsible">
+        <div><div class="card-body">
+          <a class="reference-link" href="https://copy-of-arcsys-conferenc-dtn890q.gamma.site/" target="_blank" rel="noopener">
+            <span class="ref-icon">&#128218;</span>
+            <div>
+              <div class="ref-label">ARCSys Conference Presentation</div>
+              <div class="ref-desc">Open the Gamma slide deck for reference during sessions</div>
+            </div>
+          </a>
+        </div></div>
       </div>
     </div>
 
     <!-- Venue -->
-    <div class="card">
-      <div class="card-header">
+    <div class="card" id="venue-card">
+      <div class="card-header" data-card="venue-card">
         <span class="icon">&#127968;</span>
         <h2>Venue</h2>
-        <span class="pill">Honolulu, HI</span>
+        <div class="card-header-right">
+          <span class="pill">Honolulu, HI</span>
+          <button class="collapse-btn" aria-label="Toggle Venue" onclick="event.stopPropagation()">
+            <span class="chevron">&#9662;</span>
+          </button>
+        </div>
       </div>
-      <div class="card-body">
-        <div class="venue-grid">
-          <div class="venue-details">
-            <div class="venue-detail-row">
-              <span class="vicon">&#127970;</span>
-              <div>
-                <div class="vlabel">Hotel</div>
-                <div class="vval">Ala Moana Honolulu by Mantra</div>
+      <div class="card-collapsible">
+        <div><div class="card-body">
+          <div class="venue-grid">
+            <div class="venue-details">
+              <div class="venue-detail-row">
+                <span class="vicon">&#127970;</span>
+                <div>
+                  <div class="vlabel">Hotel</div>
+                  <div class="vval">Ala Moana Honolulu by Mantra</div>
+                </div>
               </div>
-            </div>
-            <div class="venue-detail-row">
-              <span class="vicon">&#128205;</span>
-              <div>
-                <div class="vlabel">Address</div>
-                <div class="vval">
-                  <a href="https://maps.google.com/?q=Ala+Moana+Hotel+by+Mantra,+410+Atkinson+Drive,+Honolulu,+HI+96814" target="_blank" rel="noopener">
-                    410 Atkinson Drive<br>Honolulu, HI 96814
-                  </a>
+              <div class="venue-detail-row">
+                <span class="vicon">&#128205;</span>
+                <div>
+                  <div class="vlabel">Address</div>
+                  <div class="vval">
+                    <a href="https://maps.google.com/?q=Ala+Moana+Hotel+by+Mantra,+410+Atkinson+Drive,+Honolulu,+HI+96814" target="_blank" rel="noopener">
+                      410 Atkinson Drive<br>Honolulu, HI 96814
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="venue-detail-row">
+                <span class="vicon">&#128222;</span>
+                <div>
+                  <div class="vlabel">Phone</div>
+                  <div class="vval"><a href="tel:+18089554811">+1 (808) 955-4811</a></div>
+                </div>
+              </div>
+              <div class="venue-detail-row">
+                <span class="vicon">&#127965;</span>
+                <div>
+                  <div class="vlabel">Location</div>
+                  <div class="vval">Adjacent to Ala Moana Center, steps from the Hawaii Convention Center</div>
+                </div>
+              </div>
+              <div class="venue-detail-row">
+                <span class="vicon">&#128197;</span>
+                <div>
+                  <div class="vlabel">Dates</div>
+                  <div class="vval">May 26&ndash;27, 2026</div>
                 </div>
               </div>
             </div>
-            <div class="venue-detail-row">
-              <span class="vicon">&#128222;</span>
-              <div>
-                <div class="vlabel">Phone</div>
-                <div class="vval"><a href="tel:+18089554811">+1 (808) 955-4811</a></div>
-              </div>
-            </div>
-            <div class="venue-detail-row">
-              <span class="vicon">&#127965;</span>
-              <div>
-                <div class="vlabel">Location</div>
-                <div class="vval">Adjacent to Ala Moana Center, steps from the Hawaii Convention Center</div>
-              </div>
-            </div>
-            <div class="venue-detail-row">
-              <span class="vicon">&#128197;</span>
-              <div>
-                <div class="vlabel">Dates</div>
-                <div class="vval">May 26&ndash;27, 2026</div>
-              </div>
-            </div>
+            <iframe
+              class="venue-map"
+              src="https://maps.google.com/maps?q=Ala+Moana+Hotel+by+Mantra,+410+Atkinson+Drive,+Honolulu,+HI+96814&output=embed&z=15"
+              title="Ala Moana Honolulu by Mantra map"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
           </div>
-          <iframe
-            class="venue-map"
-            src="https://maps.google.com/maps?q=Ala+Moana+Hotel+by+Mantra,+410+Atkinson+Drive,+Honolulu,+HI+96814&output=embed&z=15"
-            title="Ala Moana Honolulu by Mantra map"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </div>
-        <div class="floor-plan-placeholder">
-          <strong>&#128446; Floor Map</strong>
-          A floor plan couldn't be pulled automatically &mdash; if you have a floor map image or PDF, share it and I'll embed it here.
-        </div>
+          <div class="floor-plan-placeholder">
+            <strong>&#128446; Floor Map</strong>
+            A floor plan couldn't be pulled automatically &mdash; if you have a floor map image or PDF, share it and I'll embed it here.
+          </div>
+        </div></div>
       </div>
     </div>
 
     <!-- Feedback -->
-    <div class="card">
-      <div class="card-header amber">
+    <div class="card" id="feedback-card">
+      <div class="card-header amber" data-card="feedback-card">
         <span class="icon">&#128172;</span>
         <h2>Share Your Feedback</h2>
-        <span class="pill">Slido</span>
-      </div>
-      <div class="card-body">
-        <div class="feedback-block">
-          <p>Your input helps us improve. Please take a moment to share your thoughts on the sessions, content, and overall experience.</p>
-          <a class="feedback-btn" href="https://app.sli.do/event/mrmoCZYEzDJdYUaNr6Raht" target="_blank" rel="noopener">&#128077;&nbsp; Give Feedback</a>
+        <div class="card-header-right">
+          <span class="pill">Slido</span>
+          <button class="collapse-btn" aria-label="Toggle Feedback" onclick="event.stopPropagation()">
+            <span class="chevron">&#9662;</span>
+          </button>
         </div>
+      </div>
+      <div class="card-collapsible">
+        <div><div class="card-body">
+          <div class="feedback-block">
+            <p>Your input helps us improve. Please take a moment to share your thoughts on the sessions, content, and overall experience.</p>
+            <a class="feedback-btn" href="https://app.sli.do/event/mrmoCZYEzDJdYUaNr6Raht" target="_blank" rel="noopener">&#128077;&nbsp; Give Feedback</a>
+          </div>
+        </div></div>
       </div>
     </div>
 
     <!-- Community Wall -->
     <div class="card" id="wall-card">
-      <div class="card-header">
+      <div class="card-header" data-card="wall-card">
         <span class="icon">&#128483;</span>
         <h2>Community Wall</h2>
-        <button class="maximize-btn" id="wall-maximize-btn" onclick="toggleWall()" aria-label="Maximize community wall">
-          <span id="wall-maximize-icon">&#x26F6;</span>
-          <span id="wall-maximize-label">Expand</span>
-        </button>
+        <div class="card-header-right">
+          <button class="maximize-btn" id="wall-maximize-btn" onclick="toggleWall(); event.stopPropagation();" aria-label="Expand community wall">
+            <span id="wall-maximize-icon">&#x26F6;</span>
+            <span id="wall-maximize-label">Expand</span>
+          </button>
+          <button class="collapse-btn" aria-label="Toggle Community Wall" onclick="event.stopPropagation()">
+            <span class="chevron">&#9662;</span>
+          </button>
+        </div>
       </div>
-      <iframe
-        class="slido-embed"
-        src="https://app.sli.do/event/mrmoCZYEzDJdYUaNr6Raht/live/wall"
-        title="ARCSys Community Wall"
-        allow="camera; microphone; fullscreen"
-        loading="lazy"
-      ></iframe>
+      <div class="card-collapsible">
+        <div>
+          <iframe
+            class="slido-embed"
+            src="https://app.sli.do/event/mrmoCZYEzDJdYUaNr6Raht/live/wall"
+            title="ARCSys Community Wall"
+            allow="camera; microphone; fullscreen"
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
     </div>
 
   </main>
@@ -528,6 +609,49 @@
   </footer>
 
   <script>
+    // ── Collapsible cards ──────────────────────────────────────────────────────
+
+    const STORAGE_PREFIX = 'arcsys_card_';
+
+    function isCollapsed(cardId) {
+      return sessionStorage.getItem(STORAGE_PREFIX + cardId) === 'collapsed';
+    }
+
+    function setCollapsed(cardId, collapsed) {
+      sessionStorage.setItem(STORAGE_PREFIX + cardId, collapsed ? 'collapsed' : 'expanded');
+    }
+
+    function toggleCard(cardId) {
+      const card = document.getElementById(cardId);
+      if (!card) return;
+      const nowCollapsed = card.classList.toggle('collapsed');
+      setCollapsed(cardId, nowCollapsed);
+    }
+
+    // Wire up card headers
+    document.querySelectorAll('.card-header[data-card]').forEach(function(header) {
+      header.addEventListener('click', function() {
+        toggleCard(header.dataset.card);
+      });
+    });
+
+    // Restore collapse state from sessionStorage (instant, no animation)
+    document.querySelectorAll('.card[id]').forEach(function(card) {
+      if (isCollapsed(card.id)) {
+        // Suppress transition on initial load
+        const collapsible = card.querySelector('.card-collapsible');
+        if (collapsible) collapsible.style.transition = 'none';
+        card.classList.add('collapsed');
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            if (collapsible) collapsible.style.transition = '';
+          });
+        });
+      }
+    });
+
+    // ── Wall maximize ──────────────────────────────────────────────────────────
+
     function toggleWall() {
       const card  = document.getElementById('wall-card');
       const icon  = document.getElementById('wall-maximize-icon');
@@ -538,11 +662,11 @@
       document.body.style.overflow = maximized ? 'hidden' : '';
     }
 
-    // Also allow Escape key to restore
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         const card = document.getElementById('wall-card');
         if (card.classList.contains('wall-maximized')) toggleWall();
+        if (card.classList.contains('collapsed')) toggleCard('wall-card');
       }
     });
   </script>
