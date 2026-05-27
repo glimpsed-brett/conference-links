@@ -273,6 +273,41 @@
       border-radius: 0 0 12px 12px;
     }
 
+    .maximize-btn {
+      margin-left: auto;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: background 0.18s;
+    }
+    .maximize-btn:hover { background: rgba(255,255,255,0.28); }
+
+    /* Maximized state */
+    .card.wall-maximized {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .card.wall-maximized .card-header { flex-shrink: 0; border-radius: 0; }
+    .card.wall-maximized .slido-embed {
+      flex: 1;
+      height: 100%;
+      border-radius: 0;
+    }
+
     /* ── Footer ── */
     footer {
       padding: 20px 24px;
@@ -357,11 +392,14 @@
     </div>
 
     <!-- Community Wall -->
-    <div class="card">
+    <div class="card" id="wall-card">
       <div class="card-header">
         <span class="icon">&#128483;</span>
         <h2>Community Wall</h2>
-        <span class="pill">Live</span>
+        <button class="maximize-btn" id="wall-maximize-btn" onclick="toggleWall()" aria-label="Maximize community wall">
+          <span id="wall-maximize-icon">&#x26F6;</span>
+          <span id="wall-maximize-label">Expand</span>
+        </button>
       </div>
       <iframe
         class="slido-embed"
@@ -380,5 +418,24 @@
     All rights reserved.
   </footer>
 
+  <script>
+    function toggleWall() {
+      const card  = document.getElementById('wall-card');
+      const icon  = document.getElementById('wall-maximize-icon');
+      const label = document.getElementById('wall-maximize-label');
+      const maximized = card.classList.toggle('wall-maximized');
+      icon.textContent  = maximized ? '✕' : '⛶';
+      label.textContent = maximized ? 'Restore' : 'Expand';
+      document.body.style.overflow = maximized ? 'hidden' : '';
+    }
+
+    // Also allow Escape key to restore
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const card = document.getElementById('wall-card');
+        if (card.classList.contains('wall-maximized')) toggleWall();
+      }
+    });
+  </script>
 </body>
 </html>
