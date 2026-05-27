@@ -264,6 +264,50 @@
       transform: translateY(-2px);
     }
 
+    /* ── Venue ── */
+    .venue-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 560px) { .venue-grid { grid-template-columns: 1fr; } }
+
+    .venue-details { display: flex; flex-direction: column; gap: 12px; }
+
+    .venue-detail-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.9rem;
+    }
+    .venue-detail-row .vicon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .venue-detail-row .vlabel { font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+                                letter-spacing: 0.07em; color: var(--muted); }
+    .venue-detail-row .vval  { font-weight: 600; color: var(--text); }
+    .venue-detail-row a      { color: var(--navy-700); text-decoration: none; }
+    .venue-detail-row a:hover{ text-decoration: underline; }
+
+    .venue-map {
+      width: 100%;
+      height: 220px;
+      border: none;
+      border-radius: 9px;
+      display: block;
+    }
+
+    .floor-plan-placeholder {
+      margin-top: 16px;
+      padding: 16px 20px;
+      background: var(--navy-050);
+      border: 1.5px dashed var(--navy-100);
+      border-radius: 9px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.6;
+    }
+    .floor-plan-placeholder strong { color: var(--navy-700); display: block; margin-bottom: 4px; }
+
     /* ── Community wall ── */
     .slido-embed {
       width: 100%;
@@ -373,6 +417,71 @@
             <div class="ref-desc">Open the Gamma slide deck for reference during sessions</div>
           </div>
         </a>
+      </div>
+    </div>
+
+    <!-- Venue -->
+    <div class="card">
+      <div class="card-header">
+        <span class="icon">&#127968;</span>
+        <h2>Venue</h2>
+        <span class="pill">Honolulu, HI</span>
+      </div>
+      <div class="card-body">
+        <div class="venue-grid">
+          <div class="venue-details">
+            <div class="venue-detail-row">
+              <span class="vicon">&#127970;</span>
+              <div>
+                <div class="vlabel">Hotel</div>
+                <div class="vval">Ala Moana Honolulu by Mantra</div>
+              </div>
+            </div>
+            <div class="venue-detail-row">
+              <span class="vicon">&#128205;</span>
+              <div>
+                <div class="vlabel">Address</div>
+                <div class="vval">
+                  <a href="https://maps.google.com/?q=Ala+Moana+Hotel+by+Mantra,+410+Atkinson+Drive,+Honolulu,+HI+96814" target="_blank" rel="noopener">
+                    410 Atkinson Drive<br>Honolulu, HI 96814
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="venue-detail-row">
+              <span class="vicon">&#128222;</span>
+              <div>
+                <div class="vlabel">Phone</div>
+                <div class="vval"><a href="tel:+18089554811">+1 (808) 955-4811</a></div>
+              </div>
+            </div>
+            <div class="venue-detail-row">
+              <span class="vicon">&#127965;</span>
+              <div>
+                <div class="vlabel">Location</div>
+                <div class="vval">Adjacent to Ala Moana Center, steps from the Hawaii Convention Center</div>
+              </div>
+            </div>
+            <div class="venue-detail-row">
+              <span class="vicon">&#128197;</span>
+              <div>
+                <div class="vlabel">Dates</div>
+                <div class="vval">May 26&ndash;27, 2026</div>
+              </div>
+            </div>
+          </div>
+          <iframe
+            class="venue-map"
+            src="https://maps.google.com/maps?q=Ala+Moana+Hotel+by+Mantra,+410+Atkinson+Drive,+Honolulu,+HI+96814&output=embed&z=15"
+            title="Ala Moana Honolulu by Mantra map"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+        <div class="floor-plan-placeholder">
+          <strong>&#128446; Floor Map</strong>
+          A floor plan couldn't be pulled automatically &mdash; if you have a floor map image or PDF, share it and I'll embed it here.
+        </div>
       </div>
     </div>
 
